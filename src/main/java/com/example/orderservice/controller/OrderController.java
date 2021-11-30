@@ -43,6 +43,15 @@ public class OrderController {
         return "redirect:/orders/";
     }
 
+    @RequestMapping(value = "/view", method = RequestMethod.GET)
+    public String viewOrders(@RequestParam("id") Long cusId, Model model) {
+        ResponseTemplateVO vo = orderService.getOrderByCustomer(cusId);
+        model.addAttribute("customer", vo.getCustomer());
+        model.addAttribute("orders", vo.getOrder());
+        System.out.println(vo.getCustomer());
+//        orderService.getOrderByCustomer(cusId);
+        return "viewOrders";
+    }
 //    @PostMapping("/")
 //    public Order saveOrder(@RequestBody Order order){
 //

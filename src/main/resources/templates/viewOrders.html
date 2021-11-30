@@ -3,7 +3,7 @@
 <head>
     <title>Customer</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-<!--    <link type="text/css" rel="stylesheet" href="bootstrap.min.css" th:href="@{bootstrap.min.css}"/>-->
+    <!--    <link type="text/css" rel="stylesheet" href="bootstrap.min.css" th:href="@{bootstrap.min.css}"/>-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
@@ -16,21 +16,35 @@
         <h5>18079021 - Nguyễn Văn Hùng</h5>
         <h5>18078791 - Nguyễn Hữu Lộc</h5>
     </div>
-    <h2 style="text-align: center">List Customer</h2>
-    <a href="/orders/add" class="btn btn-success" style="margin-bottom: 10px; float: right">Add Customer</a>
+    <h2 style="text-align: center">View Orders</h2>
+    <h2>Customer</h2>
+    <form>
+        <div>
+            <label >Customer ID: </label>
+            <label th:text="${customer.customerId}"></label>
+        </div>
+        <div>
+            <label >Customer Name: </label>
+            <label th:text="${customer.name}">""</label>
+        </div>
+        <div>
+            <label >Customer Address: </label>
+            <label th:text="${customer.address}">""</label>
+        </div>
+    </form>
+    <h2 style="text-align: center">List Orders</h2>
+    <a href="/orders/add" class="btn btn-success" style="margin-bottom: 10px; float: right">Add Order</a>
     <table class="table table-active">
         <tr>
-            <th>CustomerID</th>
+            <th>OrderID</th>
             <th>Name</th>
-            <th>Address</th>
-            <th>Order</th>
+            <th>Price</th>
             <th>Action</th>
         </tr>
-        <tr th:each="customer : ${customers}">
-            <td th:text="${customer.customerId}"></td>
-            <td th:text="${customer.name}"></td>
-            <td th:text="${customer.address}"></td>
-            <td> <a th:href="@{/orders/view?id={id}(id=${customer.customerId})}" class="btn btn-info">View orders </a> </td>
+        <tr >
+            <td th:text="${orders.orderId}"></td>
+            <td th:text="${orders.name}"></td>
+            <td th:text="${orders.price}"></td>
             <td>
                 <a th:href="@{orders/edit?id={id}(id=${customer.customerId})}" class="btn btn-primary">Edit</a>
                 <a th:href="@{/orders/delete?id={id}(id=${customer.customerId})}" class="btn btn-danger">Delete</a>

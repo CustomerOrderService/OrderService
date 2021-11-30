@@ -30,21 +30,23 @@ public class OrderService {
     }
     public void deleteCustomer(Long cusId){
         Map< String, String > params = new HashMap<>();
-        params.put("id", "5");
+        params.put("id", cusId.toString());
         restTemplate.delete("http://localhost:9001/customers/{id}", params);
     }
 
     public ResponseTemplateVO getOrderByCustomer(Long cusId) {
         ResponseTemplateVO vo = new ResponseTemplateVO();
-        Order order = orderRepository.findById(cusId).get();
-        vo.setOrder(order);
+
          Customer customer =
                 restTemplate.getForObject("http://localhost:9001/customers/"
-                                + order.getOrderId(),
+                                + cusId,
                         Customer.class);
 
         vo.setCustomer(customer);
-
+        Order order = orderRepository.findById(cusId).get();
+        System.out.println(order);
+        if(order != null)
+            vo.setOrder(order);
         return vo;
     }
     public List<Customer> getAllCustomer() {
