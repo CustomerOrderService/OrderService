@@ -8,6 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class OrderService {
 
@@ -19,6 +24,14 @@ public class OrderService {
 
     public Order saveOrder(Order order){
         return orderRepository.save(order);
+    }
+    public Customer saveCustomer(Customer customer){
+        return restTemplate.postForObject("http://localhost:9001/customers/",customer, Customer.class);
+    }
+    public void deleteCustomer(Long cusId){
+        Map< String, String > params = new HashMap<>();
+        params.put("id", "5");
+        restTemplate.delete("http://localhost:9001/customers/{id}", params);
     }
 
     public ResponseTemplateVO getOrderByCustomer(Long cusId) {
@@ -33,5 +46,10 @@ public class OrderService {
         vo.setCustomer(customer);
 
         return vo;
+    }
+    public List<Customer> getAllCustomer() {
+        Customer[] cus = restTemplate.getForObject("http://localhost:9001/customers/", Customer[].class);
+        List<Customer> customers = Arrays.asList(cus);
+        return customers;
     }
 }
